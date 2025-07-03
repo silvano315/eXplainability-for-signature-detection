@@ -1,0 +1,53 @@
+kaggle:
+  dataset_name: "shreelakshmigp/cedardataset"
+  download_path: "data/raw/cedardataset"
+
+paths:
+  data:
+    raw_path: "data/raw/cedardataset/cedar_dataset"
+    processed_path: "data/processed"
+    models_path: "data/models"
+
+dataset:
+  num_classes: 25  
+  train_test_split: 0.2
+  validation_split: 0.1
+
+preprocessing:
+  image:
+    size: [224, 224] 
+    normalize: true
+    channels: 1  
+    mean: [0.5]
+    std: [0.5]
+
+augmentation:
+  enabled: true
+  train:
+    random_rotation: 20
+    random_horizontal_flip: true
+    random_vertical_flip: false
+    random_brightness_contrast: true
+    gaussian_noise: 
+      enabled: true
+      mean: 0.0
+      std: 0.01
+
+training:
+  batch_size: 32
+  num_epochs: 50
+  learning_rate: 0.001
+  optimizer: "adam"
+  scheduler:
+    name: "cosine"
+    T_max: 50
+    eta_min: 1e-6
+  early_stopping:
+    patience: 10
+    min_delta: 0.001
+
+model:
+  name: "resnet50"
+  pretrained: true
+  num_classes: 25
+  dropout_rate: 0.5
