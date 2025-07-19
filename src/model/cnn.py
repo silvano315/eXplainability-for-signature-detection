@@ -3,7 +3,7 @@ import timm
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from src.models.base import BaseModel
+from src.model.base import BaseModel
 
 class BaselineCNN(BaseModel):
     def __init__(self, num_classes: int, input_channels: int = 3) -> None:
