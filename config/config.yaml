@@ -9,7 +9,7 @@ paths:
     models_path: "data/models"
 
 dataset:
-  num_classes: 25  
+  num_classes: 55  
   train_test_split: 0.2
   validation_split: 0.1
 

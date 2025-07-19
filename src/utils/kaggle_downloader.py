@@ -96,8 +96,8 @@ class KaggleDataDownloader:
         Validate downloaded dataset structure and content.
         
         Expected structure:
-        data/raw/cedardataset/
-        └── cedar_dataset/
+        data/raw/cedardataset
+        └── signatures/
             ├── full_forg/
             └── full_org/
         
@@ -106,9 +106,9 @@ class KaggleDataDownloader:
         """
         self.logger.info("Starting dataset validation...")
         
-        dataset_folder = next(self.download_path.glob("cedar_dataset"), None)
+        dataset_folder = next(self.download_path.glob("signatures"), None)
         if not dataset_folder:
-            raise ValueError("Dataset folder 'cedar_dataset' not found")
+            raise ValueError("Dataset folder 'signatures' not found")
         
         splits = ['full_forg', 'full_org']
         for split in splits:
@@ -119,17 +119,15 @@ class KaggleDataDownloader:
             if not any(split_path.rglob('*.png')):
                 raise ValueError(f"No image files found in {split} directory")
             
-            classes = [d.name for d in split_path.iterdir() if d.is_dir()]
-            if len(classes) != self.config['dataset']['num_classes']:
-                raise ValueError(
-                    f"Expected {self.config['dataset']['num_classes']} classes in {split} split, "
-                    f"but found {len(classes)}"
-                )
-        
+        # read Readme.txt if exists in signatures directory
+        readme_path = dataset_folder / 'Readme.txt'
+        if readme_path.exists():
+            with open(readme_path, 'r') as f:
+                readme_content = f.read()
+                self.logger.info(f"Readme content:\n{readme_content}")
+
         self.logger.info("Dataset validation successful")
-        self.logger.info(f"Found all required splits: {splits}")
-        self.logger.info(f"Number of classes per split: {self.config['dataset']['num_classes']}")
-        
+        self.logger.info(f"Found all required splits: {splits}")        
     
 def setup_dataset():
     """
