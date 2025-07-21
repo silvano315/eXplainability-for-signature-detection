@@ -36,7 +36,7 @@ def scan_directory(directory_path: Path, expected_type: str) -> Dict[str, Dict[s
     
     Args:
         directory_path: Path to directory containing images
-        expected_type: Expected type ('original' or 'forged')
+        expected_type: Expected type ('original' or 'forgeries')
         
     Returns:
         Dictionary mapping filename to metadata
@@ -79,7 +79,7 @@ def create_dataset_metadata(data_path: Path) -> Dict[str, Dict[str, Any]]:
     
     metadata = {}
     metadata.update(scan_directory(org_dir, "original"))
-    metadata.update(scan_directory(forg_dir, "forged"))
+    metadata.update(scan_directory(forg_dir, "forgeries"))
 
     logger.info(f"Created metadata for {len(metadata)} total images")
     return metadata
