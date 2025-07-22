@@ -4,7 +4,9 @@ from pathlib import Path
 from typing import Dict, List, Any, Tuple
 from collections import defaultdict, Counter
 
-logger = logging.getLogger(__name__)
+from src.utils.logger_setup import get_logger
+
+logger = get_logger(__name__)
 
 def extract_info_from_filename(filename: str) -> Dict[str, Any]:
     """

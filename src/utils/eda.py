@@ -9,7 +9,9 @@ from collections import Counter, defaultdict
 from PIL import Image
 import pandas as pd
 
-logger = logging.getLogger(__name__)
+from src.utils.logger_setup import get_logger
+
+logger = get_logger(__name__)
 
 def print_dataset_statistics(metadata: Dict[str, Dict[str, Any]]) -> None:
     """
