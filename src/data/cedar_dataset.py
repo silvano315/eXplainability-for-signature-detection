@@ -145,7 +145,7 @@ def create_balanced_splits(metadata: Dict[str, Dict[str, Any]],
     for filename, info in metadata.items():
         if info["type"] == "original":
             original_files.append(filename)
-        elif info["type"] == "forged":
+        elif info["type"] == "forgeries":
             forged_files.append(filename)
     
     logger.info(f"Found {len(original_files)} original and {len(forged_files)} forged signatures")
