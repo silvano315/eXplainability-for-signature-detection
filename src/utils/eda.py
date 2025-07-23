@@ -11,7 +11,7 @@ import pandas as pd
 
 from src.utils.logger_setup import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger()
 
 def print_dataset_statistics(metadata: Dict[str, Dict[str, Any]]) -> None:
     """

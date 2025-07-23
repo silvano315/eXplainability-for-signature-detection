@@ -6,7 +6,7 @@ from collections import defaultdict, Counter
 
 from src.utils.logger_setup import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger()
 
 def extract_info_from_filename(filename: str) -> Dict[str, Any]:
     """
