@@ -180,7 +180,7 @@ class SignatureExplainer:
         gradients = []
         for alpha in alphas:
             # Interpolated image
-            interpolated = baseline + alpha * (image - baseline)
+            interpolated = (baseline + alpha * (image - baseline)).detach().requires_grad_(True) #TBT
             interpolated.requires_grad_(True)
             
             # Forward pass
@@ -264,7 +264,8 @@ class SignatureExplainer:
     
     def compare_explanations(self, 
                            image: torch.Tensor,
-                           target_class: Optional[int] = None) -> Dict[str, np.ndarray]:
+                           target_class: Optional[int] = None,
+                           target_layer: Optional[str] = None) -> Dict[str, np.ndarray]:
         """
         Generate all explanation methods for comparison.
         
@@ -278,15 +279,20 @@ class SignatureExplainer:
         logger.info("Generating all explanation methods...")
         
         explanations = {}
+
+        #TBT
+        image_gc = image.clone().detach()
+        image_ig = image.clone().detach()
+        image_occ = image.clone().detach()
         
         # Grad-CAM
-        explanations['grad_cam'] = self.grad_cam(image, target_class)
+        explanations['grad_cam'] = self.grad_cam(image_gc, target_class, target_layer)
         
         # Integrated Gradients
-        explanations['integrated_gradients'] = self.integrated_gradients(image, target_class)
+        explanations['integrated_gradients'] = self.integrated_gradients(image_ig, target_class)
         
         # Occlusion Map
-        explanations['occlusion'] = self.occlusion_map(image, target_class)
+        explanations['occlusion'] = self.occlusion_map(image_occ, target_class)
         
         return explanations
     

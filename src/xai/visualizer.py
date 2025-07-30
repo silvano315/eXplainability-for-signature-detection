@@ -53,7 +53,7 @@ class XAIVisualizer:
             image[i] = image[i] * s + m
         
         # Convert to numpy and transpose
-        image = image.cpu().numpy().transpose(1, 2, 0)
+        image = image.cpu().detach().numpy().transpose(1, 2, 0)
         
         # Clip to valid range
         image = np.clip(image, 0, 1)
