@@ -281,7 +281,7 @@ class TestImageSelector:
         
         for subject_id, data in sorted(self.subjects_data.items()):
             orig_count = len(data["original"])
-            forg_count = len(data["forged"])
+            forg_count = len(data["forgeries"])
             print(f"Subject {subject_id:2d}: {orig_count} original, {forg_count} forged")
     
     def get_stats(self) -> Dict[str, Any]:
@@ -289,10 +289,10 @@ class TestImageSelector:
         stats = {
             "total_images": len(self.test_metadata),
             "original_count": sum(1 for info in self.test_metadata.values() if info["type"] == "original"),
-            "forged_count": sum(1 for info in self.test_metadata.values() if info["type"] == "forged"),
+            "forged_count": sum(1 for info in self.test_metadata.values() if info["type"] == "forgeries"),
             "unique_subjects": len(self.subjects_data),
             "subjects_with_both": sum(1 for data in self.subjects_data.values() 
-                                    if data["original"] and data["forged"])
+                                    if data["original"] and data["forgeries"])
         }
         
         return stats
